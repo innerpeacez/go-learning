@@ -9,4 +9,7 @@ var str string
 func main() {
 	var i int
 	fmt.Print(i, java, shell, c, str)
+
+	name := "innerpeacez"
+	fmt.Println("name =", name)
 }
