@@ -9,4 +9,9 @@ func main() {
 		sum += i
 	}
 	fmt.Println(sum)
+
+	for sum < 100 {
+		sum += sum
+	}
+	fmt.Println(sum)
 }
