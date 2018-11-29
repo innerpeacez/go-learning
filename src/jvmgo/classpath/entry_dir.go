@@ -10,7 +10,7 @@ type DirEntry struct {
 }
 
 func newDirEntry(path string) *DirEntry {
-	// 将path参数转换成据对路径
+	// 将path参数转换成绝对路径
 	absDir, err := filepath.Abs(path)
 	// 如果转换出错，调用panic函数终止程序
 	if err != nil {

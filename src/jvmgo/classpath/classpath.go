@@ -21,9 +21,11 @@ func Parse(jreOption, cpOption string) *Classpath {
 func (self *Classpath) parseBootAndExtClasspath(jreOption string) {
 	jreDir := getJreDir(jreOption)
 
+	// jre/lib/*
 	jreLibPath := filepath.Join(jreDir, "lib", "*")
 	self.bootClasspath = newWildcardEntry(jreLibPath)
 
+	// jre/lib/ext/*
 	jreExtPath := filepath.Join(jreDir, "lib", "ext", "*")
 	self.extClasspath = newWildcardEntry(jreExtPath)
 }
@@ -36,27 +38,34 @@ func (self *Classpath) parseUserClasspath(cpOption string) {
 }
 
 func getJreDir(jreOption string) string {
+	// 首先使用用户输入的-Xjre选项作为jre目录
 	if jreOption != "" && exists(jreOption) {
 		return jreOption
 	}
+	// 没有-Xjre选项，则在当前目录下寻找jre目录
 	if exists("./jre") {
 		return "./jre"
 	}
+	// 如果还找不到，则使用JAVA_HOME环境变量
 	if jh := os.Getenv("JAVA_HOME"); jh != "" {
 		return filepath.Join(jh, "jre")
 	}
 	panic("Can not find jre folder!")
 }
 
+// 判断目录是否存在
 func exists(path string) bool {
 	if _, err := os.Stat(path); err != nil {
-		return false
+		if os.IsNotExist(err) {
+			return false
+		}
 	}
 	return true
 }
 
+// 依次搜索class文件
 func (self *Classpath) ReadClass(className string) ([]byte, Entry, error) {
-	className = className + "./class"
+	className = className + ".class"
 	if data, entry, err := self.bootClasspath.readClass(className); err == nil {
 		return data, entry, err
 	}
