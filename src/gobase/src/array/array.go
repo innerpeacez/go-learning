@@ -25,4 +25,12 @@ func main() {
 	i := ints[cap(ints)]
 	fmt.Println(i)
 
+	// 初始化数组
+	var arr1 = [2]int{10, 20}
+	fmt.Printf("arr1 = ", arr1)
+
+	// 不定义数组的初始容量
+	var arr2 = [...]int{10, 20}
+	fmt.Printf("arr2 = ", arr2)
+
 }
