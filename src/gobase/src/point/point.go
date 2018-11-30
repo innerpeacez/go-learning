@@ -16,4 +16,9 @@ func main() {
 	*p = 1000
 	fmt.Println(*p)
 	fmt.Println(i)
+
+	var p2 *int
+	p2 = &i
+	fmt.Printf("p2 ", p2)
+	fmt.Printf("p2 ", *p2)
 }
