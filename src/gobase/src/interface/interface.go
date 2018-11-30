@@ -1,5 +1,5 @@
 package main
 
-type print interface {
+type Print interface {
 	printName(name string)
 }
