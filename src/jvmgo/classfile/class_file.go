@@ -5,17 +5,17 @@ import (
 )
 
 type ClassFile struct {
-	magic        uint32
-	minorVersion uint16
-	majorVersion uint16
-	constantPool ConstantPool
-	accessFlags  uint16
-	thisClass    uint16
-	superClass   uint16
-	interfaces   []uint16
-	fields       []*MemberInfo
-	methods      []*MemberInfo
-	attributes   []AttributeInfo
+	magic        uint32          // 魔数
+	minorVersion uint16          // 次版本号
+	majorVersion uint16          // 主版本号
+	constantPool ConstantPool    // 常量池
+	accessFlags  uint16          // 类访问标志（判断类或者接口，public，private等）
+	thisClass    uint16          // 类名（对应常量池索引）
+	superClass   uint16          // 超类名（对应常量池索引）
+	interfaces   []uint16        // 类实现的接口表（对应常量池索引）
+	fields       []*MemberInfo   // 字段
+	methods      []*MemberInfo   // 方法
+	attributes   []AttributeInfo //
 }
 
 /* 把[]byte解析成ClassFile结构体 */
@@ -50,14 +50,27 @@ func (self *ClassFile) read(reader *ClassReader) {
 	self.attributes = readAttributes(reader, self.constantPool)
 }
 
+// 读取class并检查class文件的魔数
 func (self *ClassFile) readAndCheckMagic(reader *ClassReader) {
 	magic := reader.readUint32()
 	if magic != 0XCAFEBABE {
 		panic("java.lang.ClassFormatError : magic!")
 	}
 }
-func (self *ClassFile) readAndCheckVersion(reader *ClassReader) {
 
+// 读取class版本号，并检查版本号
+func (self *ClassFile) readAndCheckVersion(reader *ClassReader) {
+	self.minorVersion = reader.readUint16()
+	self.majorVersion = reader.readUint16()
+	switch self.majorVersion {
+	case 45:
+		return
+	case 46, 47, 48, 49, 50, 51:
+		if self.minorVersion == 0 {
+			return
+		}
+	}
+	panic("java.lang.UnsupportedClassVersionError!")
 }
 func (self *ClassFile) MinorVersion() uint16 { //getter
 	return self.minorVersion
@@ -94,6 +107,7 @@ func (self *ClassFile) SuperClassName() string {
 	return "" // java中只有java.lang.Object类没有超类
 }
 
+// 接口名
 func (self *ClassFile) InterfaceName() []string {
 	interfaceNames := make([]string, len(self.interfaces))
 	for i, cpIndex := range self.interfaces {
