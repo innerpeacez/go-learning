@@ -1,5 +1,6 @@
 package classfile
 
+// 表示常量表达式的值
 type ConstantValueAttribute struct {
 	constantValueIndex uint16
 }
