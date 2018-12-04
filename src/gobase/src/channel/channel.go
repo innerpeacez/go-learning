@@ -21,4 +21,28 @@ func main() {
 	sum1, sum2 := <-c, <-c
 	fmt.Println(sum1, sum2)
 
+	// 创建缓冲channel
+
+	channel := make(chan int, 3)
+	//go sum(a, channel)
+	//go sum(a[len(a)/2:], channel)
+	//go sum(a[:len(a)/2], channel)
+	channel <- 1
+	channel <- 2
+
+	// 缓冲区满的时候直接报错
+	//channel <- 3
+
+	//for i := range channel {
+	//	fmt.Println(i)
+	//}
+
+	close(channel)
+	v, ok := <-channel
+	fmt.Println(ok)
+	channel <- 3
+	if ok {
+		fmt.Println(v)
+	}
+
 }
