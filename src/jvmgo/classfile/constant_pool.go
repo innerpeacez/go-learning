@@ -5,7 +5,7 @@ type ConstantPool []ConstantInfo
 // 获取常量池
 func readConstantPool(reader *ClassReader) ConstantPool {
 	cpCount := int(reader.readUint16())
-	cp := make([]ConstantPool, cpCount)
+	cp := make([]ConstantInfo, cpCount)
 
 	for i := 1; i < cpCount; i++ { // 注意索引从1开始
 		cp[i] = readConstantInfo(reader, cp)
@@ -35,7 +35,7 @@ func (self ConstantPool) getNameAndType(index uint16) (string, string) {
 
 // 根据索引从常量池中查找类名
 func (self ConstantPool) getClassName(index uint16) string {
-	classInfo := self.getClassName(index).(*ConstantClassInfo)
+	classInfo := self.getConstantInfo(index).(*ConstantClassInfo)
 	return self.getUtf8(classInfo.nameIndex)
 }
 
