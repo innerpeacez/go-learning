@@ -1,6 +1,6 @@
 package classfile
 
-type Attribute interface {
+type AttributeInfo interface {
 	readInfo(reader *ClassReader)
 }
 
@@ -19,12 +19,13 @@ func readAttribute(reader *ClassReader, cp ConstantPool) AttributeInfo {
 	attrLen := reader.readUint32()
 	attrInfo := newAttributeInfo(attrName, attrLen, cp)
 	attrInfo.readInfo(reader)
+	return attrInfo
 }
 
 func newAttributeInfo(attrName string, attrLen uint32, cp ConstantPool) AttributeInfo {
 	switch attrName {
 	case "Code":
-		return &CodeAttibute{cp: cp}
+		return &CodeAttribute{cp: cp}
 	case "ConstantValue":
 		return &ConstantValueAttribute{}
 	case "Deprecated":
@@ -40,6 +41,6 @@ func newAttributeInfo(attrName string, attrLen uint32, cp ConstantPool) Attribut
 	case "Synthetic":
 		return &SyntheticAttribute{}
 	default:
-		return &UnparsedAttribute(attrName, attrLen, nil)
+		return &UnparsedAttribute{attrName, attrLen, nil}
 	}
 }
