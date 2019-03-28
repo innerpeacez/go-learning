@@ -1,11 +1,16 @@
-package main
+package main // 包名
 
-import (
+import ( // 导包
 	"os"
 	"fmt"
 )
 
-func main() {
-	fmt.Println(os.Args)
-	fmt.Print("hello go");
+func main() { // main 方法
+	fmt.Println("hello go");
+
+	if len(os.Args)>1 {
+		fmt.Println("arg 1",os.Args)
+	}
+
+	os.Exit(0)
 }
