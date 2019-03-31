@@ -24,9 +24,18 @@ func Test_MAX(t *testing.T) {
 }
 
 func TestPoint(t *testing.T) {
+	// 不支持指针运算
 	a := 1
 	aPtr := &a
 
 	t.Log(a, aPtr)
 	t.Logf("%T %T", a, aPtr)
+}
+
+func TestString(t *testing.T) {
+	// 字符串默认值是"" 空字符串 而不是 nil
+	var s string
+
+	t.Log("*" + s + "*")
+	t.Log(len(s))
 }
