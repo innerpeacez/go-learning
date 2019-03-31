@@ -2,6 +2,7 @@ package test_type
 
 import (
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -14,4 +15,18 @@ func Test_type(t *testing.T) {
 	a = int(b)
 	a = int(my_int)
 	fmt.Println(a, b, my_int)
+}
+
+func Test_MAX(t *testing.T) {
+	var a = math.MaxInt64
+	fmt.Println("a=", a)
+
+}
+
+func TestPoint(t *testing.T) {
+	a := 1
+	aPtr := &a
+
+	t.Log(a, aPtr)
+	t.Logf("%T %T", a, aPtr)
 }
