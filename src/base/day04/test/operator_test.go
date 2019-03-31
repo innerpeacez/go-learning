@@ -15,3 +15,12 @@ func TestCompareArray(t *testing.T) {
 	t.Log(a == c)
 	t.Log(a == d)
 }
+
+func TestBitClear(t *testing.T) {
+	// 按位清零，将符号左边数的二进制位，相同位清零，不同位保留
+	a := 7 // 0111
+
+	t.Log(a &^ 1) // 0110
+
+	t.Log(a &^ 13)
+}
