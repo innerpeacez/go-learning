@@ -19,7 +19,7 @@ func (goProgrammer *GoProgrammer) WriteHelloWorld() string {
 
 // 测试类
 func TestInterface(t *testing.T) {
-	programmer := GoProgrammer{}
+	programmer := &GoProgrammer{}
 	hello := programmer.WriteHelloWorld()
 	t.Log(hello)
 }
