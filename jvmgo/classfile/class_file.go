@@ -53,7 +53,7 @@ func (self *ClassFile) read(reader *ClassReader) {
 // 读取class并检查class文件的魔数
 func (self *ClassFile) readAndCheckMagic(reader *ClassReader) {
 	magic := reader.readUint32()
-	if magic != 0XCAFEBABE {
+	if magic != 0xCAFEBABE {
 		panic("java.lang.ClassFormatError : magic!")
 	}
 }
