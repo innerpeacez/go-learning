@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"jvmgo/classfile"
-	"jvmgo/classpath"
+	"github.com/innerpeacez/go-learning/jvmgo/classfile"
+	"github.com/innerpeacez/go-learning/jvmgo/classpath"
 	"strings"
 )
 

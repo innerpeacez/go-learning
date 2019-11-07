@@ -1,8 +1,8 @@
 package client
 
 import (
-	my_init "base/day18/init"
-	"base/day18/series"
+	my_init "github.com/innerpeacez/go-learning/base/day18/init"
+	"github.com/innerpeacez/go-learning/base/day18/series"
 	"testing"
 )
 
